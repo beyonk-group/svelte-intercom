@@ -18,7 +18,9 @@
     )
   }
 
-  export const intercom = window[globalName]
+  export function getIntercom () {
+    return window[globalName]
+  }
 
   export function boot (options = getSettings()) {
     window[globalName]('boot', options)
