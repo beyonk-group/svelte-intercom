@@ -2,8 +2,8 @@
   "name": "@beyonk/svelte-intercom",
   "version": "0.0.3",
   "svelte": "src/index.js",
-  "module": "index.mjs",
-  "main": "index.js",
+  "module": "dist/index.mjs",
+  "main": "dist/index.js",
   "scripts": {
     "build": "rollup -c",
     "dev": "NODE_ENV=development rollup -cw",

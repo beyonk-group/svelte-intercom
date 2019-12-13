@@ -20,8 +20,8 @@ const plugins = [
 ]
 
 const output = [
-	{ file: pkg.module, 'format': 'es' },
-	{ file: pkg.main, 'format': 'umd', name }
+	{ file: `dist/${pkg.module}`, 'format': 'es' },
+	{ file: `dist/${pkg.main}`, 'format': 'umd', name }
 ]
 
 if (dev) {
