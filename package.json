@@ -7,12 +7,14 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "NODE_ENV=development rollup -cw",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "lint": "eslint src/"
   },
   "devDependencies": {
     "@beyonk/eslint-config": "^4.0.1",
     "@gen/rollup-plugin-generate-html": "^0.1.1",
     "eslint": "^6.7.2",
+    "eslint-plugin-svelte3": "^2.7.3",
     "rollup": "^1.27.12",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
