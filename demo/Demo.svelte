@@ -1,4 +1,4 @@
-<Messenger appId='qu7n6gye' />
+<Messenger appId='process.env.APP_ID' />
 <script>
   import { Messenger } from '../src'
 </script>

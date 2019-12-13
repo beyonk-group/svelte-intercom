@@ -20,8 +20,8 @@ const plugins = [
 ]
 
 const output = [
-	{ file: `dist/${pkg.module}`, 'format': 'es' },
-	{ file: `dist/${pkg.main}`, 'format': 'umd', name }
+	{ file: pkg.module, 'format': 'es' },
+	{ file: pkg.main, 'format': 'umd', name }
 ]
 
 if (dev) {
@@ -42,11 +42,6 @@ if (dev) {
 			contentBase: 'dist',
 			port: 12001
 		})
-	)
-	output.push(
-    ...output.map(o => {
-      return { ...o, file: `dist/${o.file}` }
-    })
 	)
 }
 
