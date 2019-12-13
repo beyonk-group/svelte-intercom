@@ -51,7 +51,7 @@ if (dev) {
 }
 
 export default {
-	input: dev ? 'demo/demo.js' : 'src/components.js',
+	input: dev ? 'demo/demo.js' : 'src/index.js',
 	output,
 	plugins
 }
