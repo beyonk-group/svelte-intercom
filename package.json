@@ -1,0 +1,47 @@
+{
+  "name": "@beyonk/svelte-intercom",
+  "version": "0.0.0",
+  "svelte": "src/index.js",
+  "module": "index.mjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "NODE_ENV=development rollup -cw",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@beyonk/eslint-config": "^4.0.1",
+    "@gen/rollup-plugin-generate-html": "^0.1.1",
+    "eslint": "^6.7.2",
+    "rollup": "^1.27.12",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-replace": "^2.2.0",
+    "rollup-plugin-serve": "^1.0.1",
+    "rollup-plugin-server": "^0.7.0",
+    "rollup-plugin-svelte": "^5.1.1",
+    "svelte": "^3.16.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/beyonk-adventures/svelte-intercom.git"
+  },
+  "keywords": [
+    "svelte",
+    "intercom",
+    "widget",
+    "chat",
+    "bot"
+  ],
+  "files": [
+    "src",
+    "index.mjs",
+    "index.js"
+  ],
+  "eslintConfig": {
+    "extends": "@beyonk/eslint-config/svelte"
+  },
+  "dependencies": {
+    "@beyonk/async-script-loader": "^1.0.3"
+  }
+}
