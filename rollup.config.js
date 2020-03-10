@@ -27,7 +27,7 @@ const output = [
 if (dev) {
 	plugins.unshift(
 		replace({
-			API_KEY: process.env.API_KEY,
+			APP_ID: process.env.APP_ID,
 			include: 'demo/Demo.svelte',
 			delimiters: ['%', '%']
 		})
