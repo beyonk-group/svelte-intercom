@@ -87,6 +87,14 @@ You can access the underlying intercom instance for anything else you require:
 </script>
 ```
 
+## Developing
+
+In order to run the local demo you *must* pass a valid intercom app id otherwise it won't work:
+
+```
+APP_ID=<your-app-id> npm run dev
+```
+
 ## License
 
 [MIT License](./LICENSE)
