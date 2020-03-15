@@ -36,10 +36,10 @@ List of possible options in the module:
 
 ## Events
 
-The Component emits a series of events:
+The Component emits all events emitted by the intercom module:
 
 ```html
-<Messenger appId='abcde12345' on:unread-message-count={doStuff}/>
+<Messenger appId='abcde12345' on:unread-count-change ={doStuff} />
 
 <script>
   import { Messenger } from '@beyonk/svelte-intercom'
@@ -54,11 +54,13 @@ List of possible events in the module:
 
 | Event                | Description                                                                                                                             |
 |----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| unread-message-count | [onUnreadCountChange](https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomonunreadcountchange) |
+| unread-count-change  | [onUnreadCountChange](https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomonunreadcountchange) |
+| show                 | [onShow](https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomonshow) |
+| hide                 | [onHide](https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomonhide) |
 
 ## Methods
 
-The Component has a series of methods
+The Component has all methods listed in [the intercom documentation](https://developers.intercom.com/installing-intercom/docs/intercom-javascript)
 
 
 ```html
@@ -71,12 +73,19 @@ The Component has a series of methods
 </script>
 ```
 
-List of possible methods in the module:
+## The underlying instance
 
+You can access the underlying intercom instance for anything else you require:
 
-| Method            | Params             | Required | Description                                                                                                                           |
-|-------------------|--------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------|
-| boot              | options            | false    | [boot](https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomboot-intercomsettings)            |                                                                                                                 |
+```html
+<Messenger appId='abcde12345' bind:this={intercom} />
+
+<script>
+  import { Messenger } from '@beyonk/svelte-intercom'
+
+  const rawIntercom = intercom.getIntercom()
+</script>
+```
 
 ## License
 

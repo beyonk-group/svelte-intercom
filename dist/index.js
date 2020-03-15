@@ -291,6 +291,10 @@
     		window[globalName]("boot", options);
     	}
 
+    	function shutdown() {
+    		window[globalName]("shutdown");
+    	}
+
     	function startTour(tourId) {
     		window[globalName]("startTour", tourId);
     	}
@@ -300,10 +304,49 @@
     		window[globalName]("update", window[settingsKey]);
     	}
 
+    	function show() {
+    		window[globalName]("show");
+    	}
+
+    	function hide() {
+    		window[globalName]("hide");
+    	}
+
+    	function showNewMessage(content) {
+    		window[globalName]("showNewMessage", content);
+    	}
+
+    	function showMessages() {
+    		window[globalName]("showMessages");
+    	}
+
+    	function trackEvent(metadata) {
+    		window[globalName]("trackEvent", metadata);
+    	}
+
+    	function getVisitorId() {
+    		return window[globalName]("getVisitorId");
+    	}
+
+    	function bindEvents() {
+    		const events = [
+    			{ name: "onHide", binding: "hide" },
+    			{ name: "onShow", binding: "show" },
+    			{
+    				name: "onUnreadCountChange",
+    				binding: "unread-count-change"
+    			}
+    		];
+
+    		events.forEach(e => {
+    			window[globalName](e.name, dispatch.bind(e.binding));
+    		});
+    	}
+
     	onMount(() => {
     		loader(`//widget.intercom.io/widget/${appId}`, () => typeof window[globalName] === "function", () => {
     			window[globalName]("reattach_activator");
-    			window[globalName]("onUnreadCountChange", dispatch.bind("unread-count-change"));
+    			bindEvents();
 
     			if (autoBoot) {
     				boot();
@@ -325,8 +368,15 @@
     		settingsKey,
     		getIntercom,
     		boot,
+    		shutdown,
     		startTour,
-    		updateSettings
+    		updateSettings,
+    		show,
+    		hide,
+    		showNewMessage,
+    		showMessages,
+    		trackEvent,
+    		getVisitorId
     	];
     }
 
@@ -342,8 +392,15 @@
     			settingsKey: 4,
     			getIntercom: 5,
     			boot: 6,
-    			startTour: 7,
-    			updateSettings: 8
+    			shutdown: 7,
+    			startTour: 8,
+    			updateSettings: 9,
+    			show: 10,
+    			hide: 11,
+    			showNewMessage: 12,
+    			showMessages: 13,
+    			trackEvent: 14,
+    			getVisitorId: 15
     		});
     	}
 
@@ -363,12 +420,40 @@
     		return this.$$.ctx[6];
     	}
 
-    	get startTour() {
+    	get shutdown() {
     		return this.$$.ctx[7];
     	}
 
-    	get updateSettings() {
+    	get startTour() {
     		return this.$$.ctx[8];
+    	}
+
+    	get updateSettings() {
+    		return this.$$.ctx[9];
+    	}
+
+    	get show() {
+    		return this.$$.ctx[10];
+    	}
+
+    	get hide() {
+    		return this.$$.ctx[11];
+    	}
+
+    	get showNewMessage() {
+    		return this.$$.ctx[12];
+    	}
+
+    	get showMessages() {
+    		return this.$$.ctx[13];
+    	}
+
+    	get trackEvent() {
+    		return this.$$.ctx[14];
+    	}
+
+    	get getVisitorId() {
+    		return this.$$.ctx[15];
     	}
     }
 

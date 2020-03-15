@@ -26,6 +26,10 @@
     window[globalName]('boot', options)
   }
 
+  export function shutdown () {
+    window[globalName]('shutdown')
+  }
+
   export function startTour (tourId) {
     window[globalName]('startTour', tourId)
   }
@@ -35,14 +39,49 @@
     window[globalName]('update', window[settingsKey])
   }
 
+  export function show () {
+    window[globalName]('show')
+  }
+
+  export function hide () {
+    window[globalName]('hide')
+  }
+
+  export function showNewMessage (content) {
+    window[globalName]('showNewMessage', content)
+  }
+
+  export function showMessages () {
+    window[globalName]('showMessages')
+  }
+
+  export function trackEvent (metadata) {
+    window[globalName]('trackEvent', metadata)
+  }
+
+  export function getVisitorId () {
+    return window[globalName]('getVisitorId')
+  }
+
+  function bindEvents () {
+    const events = [
+      { name: 'onHide', binding: 'hide' },
+      { name: 'onShow', binding: 'show' },
+      { name: 'onUnreadCountChange', binding: 'unread-count-change' }
+    ]
+
+    events.forEach(e => {
+      window[globalName](e.name, dispatch.bind(e.binding))
+    })
+  }
+
   onMount(() => {
     loader(
       `//widget.intercom.io/widget/${appId}`,
       () => typeof window[globalName] === 'function',
       () => {
         window[globalName]('reattach_activator')
-        window[globalName]('onUnreadCountChange', dispatch.bind('unread-count-change'))
-
+        bindEvents()
         if (autoBoot) {
           boot()
         }
