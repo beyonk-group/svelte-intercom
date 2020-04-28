@@ -22,7 +22,7 @@
     "rollup-plugin-serve": "^1.0.1",
     "rollup-plugin-server": "^0.7.0",
     "rollup-plugin-svelte": "^5.1.1",
-    "svelte": "^3.20.0"
+    "svelte": "^3.21.0"
   },
   "repository": {
     "type": "git",

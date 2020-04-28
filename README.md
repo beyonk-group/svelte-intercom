@@ -62,7 +62,6 @@ List of possible events in the module:
 
 The Component has all methods listed in [the intercom documentation](https://developers.intercom.com/installing-intercom/docs/intercom-javascript)
 
-
 ```html
 <Messenger appId='abcde12345' bind:this={intercom} />
 
@@ -72,6 +71,16 @@ The Component has all methods listed in [the intercom documentation](https://dev
   intercom.boot()
 </script>
 ```
+
+The component implements a couple of extra convenience methods:
+
+
+List of possible events in the module:
+
+| Event                | Description       |                                                                                                                      |
+|----------------------|-------------------|
+| showLauncher()       | show the launcher |
+| hideLauncher()       | hide the launcher |
 
 ## The underlying instance
 

@@ -39,12 +39,24 @@
     window[globalName]('update', window[settingsKey])
   }
 
+  export function updateSetting (setting, value) {
+    window[globalName]('update', { [setting]: value })
+  }
+
   export function show () {
     window[globalName]('show')
   }
 
   export function hide () {
     window[globalName]('hide')
+  }
+
+  export function showLauncher () {
+    updateSetting('hide_default_launcher', false)
+  }
+
+  export function hideLauncher () {
+    updateSetting('hide_default_launcher', true)
   }
 
   export function showNewMessage (content) {
