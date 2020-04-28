@@ -16,11 +16,13 @@ $ npm install --save-dev @beyonk/svelte-intercom
 
 ## Usage (With Svelte)
 
+Place the IntercomLauncher at the top level of your application (_layout.svelte for Sapper)
+
 ```html
-<Messenger appId='abcde12345' />
+<IntercomLauncher appId='abcde12345' />
 
 <script>
-  import { Messenger } from '@beyonk/svelte-intercom'
+  import { IntercomLauncher, intercom } from '@beyonk/svelte-intercom'
 </script>
 ```
 
@@ -39,13 +41,13 @@ List of possible options in the module:
 The Component emits all events emitted by the intercom module:
 
 ```html
-<Messenger appId='abcde12345' on:unread-count-change ={doStuff} />
+<IntercomLauncher appId='abcde12345' on:unread-count-change={logUnreadCount} />
 
 <script>
-  import { Messenger } from '@beyonk/svelte-intercom'
+  import { IntercomLauncher } from '@beyonk/svelte-intercom'
 
-  function doStuff () {
-    //...
+  function logUnreadCount (unreadCount) {
+    console.log('Unread count', unreadCount)
   }
 </script>
 ```
@@ -57,18 +59,21 @@ List of possible events in the module:
 | unread-count-change  | [onUnreadCountChange](https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomonunreadcountchange) |
 | show                 | [onShow](https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomonshow) |
 | hide                 | [onHide](https://developers.intercom.com/installing-intercom/docs/intercom-javascript#section-intercomonhide) |
+| ready                | Dispatched when the intercom component has finished initialising |
 
 ## Methods
 
-The Component has all methods listed in [the intercom documentation](https://developers.intercom.com/installing-intercom/docs/intercom-javascript)
+The Component has all methods listed in [the intercom documentation](https://developers.intercom.com/installing-intercom/docs/intercom-javascript).
+
+These methods are exposed by the `intercom` module. This module can be imported anywhere in your project to call methods on the Messenger.
 
 ```html
-<Messenger appId='abcde12345' bind:this={intercom} />
+<IntercomLauncher appId='abcde12345' />
 
 <script>
-  import { Messenger } from '@beyonk/svelte-intercom'
+  import { IntercomLauncher, intercom } from '@beyonk/svelte-intercom'
 
-  intercom.boot()
+  intercom.startTour()
 </script>
 ```
 
@@ -87,10 +92,10 @@ List of possible events in the module:
 You can access the underlying intercom instance for anything else you require:
 
 ```html
-<Messenger appId='abcde12345' bind:this={intercom} />
+<IntercomLauncher appId='abcde12345' bind:this={intercom} />
 
 <script>
-  import { Messenger } from '@beyonk/svelte-intercom'
+  import { IntercomLauncher } from '@beyonk/svelte-intercom'
 
   const rawIntercom = intercom.getIntercom()
 </script>

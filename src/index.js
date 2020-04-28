@@ -1,5 +1,7 @@
-import Messenger from './Messenger.svelte'
+import IntercomLauncher from './IntercomLauncher.svelte'
+import * as intercom from './messenger.js'
 
 export {
-  Messenger
+  IntercomLauncher,
+  intercom
 }
