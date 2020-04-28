@@ -9,7 +9,6 @@ export function startTour (tourId) {
 }
 
 export function updateSetting (setting, value) {
-  console.log('updating setting', setting, value)
   intercomEvents.set([ 'update', { [setting]: value } ])
 }
 

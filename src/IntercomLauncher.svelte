@@ -1,6 +1,7 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
   import { intercomEvents } from './stores.js'
+  import { EventQueue } from './queue.js'
   import loader from '@beyonk/async-script-loader'
 
   export let autoBoot = true
@@ -8,6 +9,8 @@
   export let settings
   export const globalName = 'Intercom'
   export const settingsKey = 'intercomSettings'
+
+  let queue
 
   const dispatch = createEventDispatcher()
 
@@ -21,11 +24,11 @@
 
   export function updateSettings () {
     window[settingsKey] = getSettings()
-    window[globalName]('update', window[settingsKey])
+    queue.send('update', window[settingsKey])
   }
 
   export function getVisitorId () {
-    return window[globalName]('getVisitorId')
+    return getIntercom()('getVisitorId')
   }
 
   export function getIntercom () {
@@ -33,7 +36,7 @@
   }
 
   function boot (options = getSettings()) {
-    window[globalName]('boot', options)
+    queue.send('boot', options)
   }
 
   function bindEvents () {
@@ -44,7 +47,7 @@
     ]
 
     events.forEach(e => {
-      window[globalName](e.name, dispatch.bind(e.binding))
+      queue.send(e.name, dispatch.bind(e.binding))
     })
   }
 
@@ -53,11 +56,13 @@
       `//widget.intercom.io/widget/${appId}`,
       () => typeof window[globalName] === 'function',
       () => {
+        queue = new EventQueue(window[globalName])
         window[globalName]('reattach_activator')
         bindEvents()
         if (autoBoot) {
           boot()
         }
+        queue.start()
         dispatch('ready')
       }
     )
@@ -65,10 +70,6 @@
 
   let unsubscribe = intercomEvents.subscribe(cmd => {
     if (!cmd) { return }
-    if (!window[globalName]) {
-      console.error('[svelte-intercom] called', cmd[0], 'before intercom was ready')
-      return
-    }
     const [ command, params ] = cmd
     window[globalName](command, params)
     intercomEvents.set()

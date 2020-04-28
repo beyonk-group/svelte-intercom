@@ -44,6 +44,7 @@
     "extends": "@beyonk/eslint-config/svelte"
   },
   "dependencies": {
-    "@beyonk/async-script-loader": "^1.0.3"
+    "@beyonk/async-script-loader": "^1.0.3",
+    "fastq": "^1.7.0"
   }
 }
