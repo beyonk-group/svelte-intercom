@@ -3,7 +3,6 @@ import Queue from 'fastq'
 function worker (cmd, cb) {
   const [ command, params ] = cmd
   this.getIntercom()(command, params)
-  console.log('from queue', command, params)
   cb(null)
 }
 

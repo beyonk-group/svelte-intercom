@@ -14,7 +14,6 @@
 
   if (process.browser) {
     queue = new EventQueue(getIntercom)
-    console.log('queue defined in onMount')
   }
 
   const dispatch = createEventDispatcher()
@@ -74,7 +73,6 @@
   })
 
   let unsubscribe = intercomEvents.subscribe(cmd => {
-    console.log('store sets', cmd)
     if (!cmd) { return }
     const [ command, params ] = cmd
     queue.send(command, params)
