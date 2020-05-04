@@ -1,6 +1,6 @@
 <script>
   import { onMount, onDestroy, createEventDispatcher } from 'svelte'
-  import { intercomEvents } from './stores.js'
+  import { intercomEvents, bootOverrides } from './stores.js'
   import { EventQueue } from './queue.js'
   import loader from '@beyonk/async-script-loader'
 
@@ -12,13 +12,21 @@
 
   let queue
 
+  if (process.browser) {
+    queue = new EventQueue(getIntercom)
+    console.log('queue defined in onMount')
+  }
+
   const dispatch = createEventDispatcher()
 
   function getSettings () {
     return Object.assign(
       {},
       settings,
-      { app_id: appId }
+      {
+        app_id: appId
+      },
+      $bootOverrides
     )
   }
 
@@ -56,12 +64,9 @@
       `//widget.intercom.io/widget/${appId}`,
       () => typeof window[globalName] === 'function',
       () => {
-        queue = new EventQueue(window[globalName])
         window[globalName]('reattach_activator')
         bindEvents()
-        if (autoBoot) {
-          boot()
-        }
+        autoBoot && boot()
         queue.start()
         dispatch('ready')
       }
@@ -69,11 +74,15 @@
   })
 
   let unsubscribe = intercomEvents.subscribe(cmd => {
+    console.log('store sets', cmd)
     if (!cmd) { return }
     const [ command, params ] = cmd
-    window[globalName](command, params)
+    queue.send(command, params)
     intercomEvents.set()
   })
 
-  onDestroy(unsubscribe)
+  onDestroy(() => {
+    unsubscribe()
+    queue && queue.stop()
+  })
 </script>

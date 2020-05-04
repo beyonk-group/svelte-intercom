@@ -2,13 +2,14 @@ import Queue from 'fastq'
 
 function worker (cmd, cb) {
   const [ command, params ] = cmd
-  this.intercom(command, params)
+  this.getIntercom()(command, params)
+  console.log('from queue', command, params)
   cb(null)
 }
 
 export class EventQueue {
-  constructor (intercom) {
-    this.intercom = intercom
+  constructor (getIntercom) {
+    this.getIntercom = getIntercom
     this.queue = new Queue(this, worker, 1)
     this.queue.pause()
   }
@@ -19,5 +20,9 @@ export class EventQueue {
 
   start () {
     this.queue.resume()
+  }
+
+  stop () {
+    this.queue.kill()
   }
 }

@@ -101,6 +101,28 @@ You can access the underlying intercom instance for anything else you require:
 </script>
 ```
 
+## Troubleshooting
+
+### Q. How do I hide the launcher for specific pages?
+
+Because of the strange way intercom's launcher hiding works, you need to add the following to your route to hide it for that specific page.
+
+```
+import { onMount, onDestroy } from 'svelte'
+
+onMount(async () => {
+  intercom.overrideBootSettings({ hide_default_launcher: true })
+  intercom.hideLauncher()
+})
+
+onDestroy(intercom.showLauncher)
+```
+
+This will:
+* add a boot setting for intercom to hide the launcher by default, if the page is the first page the user visits in your application.
+* hide the launcher immediately for the page
+* set a hook so that if the user navigates away from the page, the launcher shows again.
+
 ## Developing
 
 In order to run the local demo you *must* pass a valid intercom app id otherwise it won't work:

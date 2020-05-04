@@ -1,4 +1,8 @@
-import { intercomEvents } from './stores.js'
+import { intercomEvents, bootOverrides } from './stores.js'
+
+export function overrideBootSettings (settings) {
+  bootOverrides.set(settings)
+}
 
 export function shutdown () {
   intercomEvents.set([ 'shutdown' ])
