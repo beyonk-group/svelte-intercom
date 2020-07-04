@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy, createEventDispatcher } from 'svelte'
+  import { onMount, createEventDispatcher } from 'svelte'
   import { intercomEvents, bootOverrides } from './stores.js'
   import { EventQueue } from './queue.js'
   import loader from '@beyonk/async-script-loader'
@@ -70,17 +70,17 @@
         dispatch('ready')
       }
     )
-  })
 
-  let unsubscribe = intercomEvents.subscribe(cmd => {
-    if (!cmd) { return }
-    const [ command, params ] = cmd
-    queue.send(command, params)
-    intercomEvents.set()
-  })
+    let unsubscribe = intercomEvents.subscribe(cmd => {
+      if (!cmd) { return }
+      const [ command, params ] = cmd
+      queue.send(command, params)
+      intercomEvents.set()
+    })
 
-  onDestroy(() => {
-    unsubscribe()
-    queue && queue.stop()
+    return () => {
+      unsubscribe()
+      queue && queue.stop()
+    }
   })
 </script>
